@@ -56,14 +56,6 @@ class Predictor:
             subset_boxes = boxes[mask, :]
             box_probs = torch.cat([subset_boxes, probs.reshape(-1, 1)], dim=1)
 
-            # with open("beforenms.pkl","wb")as f:
-            #     # box_probs[:, 0] *= width
-            #     # box_probs[:, 1] *= height
-            #     # box_probs[:, 2] *= width
-            #     # box_probs[:, 3] *= height
-            #     pickle.dump(box_probs, f)
-            # print(box_probs)
-
             box_probs = box_utils.nms(box_probs, self.nms_method,
                                       score_threshold=prob_threshold,
                                       iou_threshold=self.iou_threshold,
@@ -72,26 +64,15 @@ class Predictor:
                                       candidate_size=self.candidate_size)
             picked_box_probs.append(box_probs)
 
-            # # 获取nms前后的差异
-            # with open("afternms.pkl", "wb") as f:
-            #     # box_probs[:, 0] *= width
-            #     # box_probs[:, 1] *= height
-            #     # box_probs[:, 2] *= width
-            #     # box_probs[:, 3] *= height
-            #     pickle.dump(box_probs, f)
-            # print(box_probs)
-
             picked_labels.extend([class_index] * box_probs.size(0))
         if not picked_box_probs:
             return torch.tensor([]), torch.tensor([]), torch.tensor([])
-        # print(picked_box_probs)
+
         picked_box_probs = torch.cat(picked_box_probs)
-        # print(picked_box_probs)
-        # print(width)
+
         picked_box_probs[:, 0] *= width
         picked_box_probs[:, 1] *= height
         picked_box_probs[:, 2] *= width
         picked_box_probs[:, 3] *= height
-        # print(picked_box_probs)
-        # print('[{}] Postprocess time: {}'.format(__name__, self.timer.end()))
+
         return picked_box_probs[:, :4], torch.tensor(picked_labels), picked_box_probs[:, 4]

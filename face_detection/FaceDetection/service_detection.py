@@ -10,8 +10,7 @@ class FaceDetection:
 
     def __init__(self, args):
 
-        define_img_size(args[
-                            'input_size'])  # must put define_img_size() before 'import create_mb_tiny_fd, create_mb_tiny_fd_predictor'
+        define_img_size(args['input_size'])  # must put define_img_size() before 'import create_mb_tiny_fd, create_mb_tiny_fd_predictor'
 
         label = base_config.ROOT_DIR + '/face_detection/models/voc-model-labels.txt'
         class_names = [name.strip() for name in open(label).readlines()]
