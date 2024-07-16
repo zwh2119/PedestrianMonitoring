@@ -32,10 +32,10 @@ def age_service(frame,faceBoxes):
         cv2.putText(frame, labelAge, (left,up), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
                     (0, 255, 255), 2, cv2.LINE_AA)
     return frame,age_res
-
-img = cv2.imread('img.png')
-img, boxes = draw_service.get_face_box(img)
-img,age_res = age_service(img, boxes)
-cv2.imshow('img', img)
-cv2.waitKey(0)
-cv2.imwrite('img_res.png',img)
+def test():
+    img = cv2.imread('img.png')
+    img, boxes = draw_service.get_face_box(img)
+    img,age_res = age_service(img, boxes)
+    cv2.imshow('img', img)
+    cv2.waitKey(0)
+    cv2.imwrite('img_res.png',img)
