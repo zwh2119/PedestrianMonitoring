@@ -2,7 +2,7 @@ import cv2
 import base_config
 
 video_source_dir = base_config.ROOT_DIR + "/video_prepare/target_video"
-video_name = "smallmanin"
+video_name = "traffic"
 video_target = video_source_dir + "/" + video_name+".mp4"
 frame_target_dir = base_config.ROOT_DIR + "/video_prepare/frame_clip"
 
@@ -16,10 +16,10 @@ if __name__ == '__main__':
         while True:
             success, frame = capture.read()
             if success:
-                i+=1
-                frame_name = video_name+"_"+str(i)+".jpg"
+                i+=3
+                frame_name = video_name+"_"+str(i//3)+".jpg"
                 # cv2.imshow("win",frame)
                 # cv2.waitKey(0)
                 cv2.imwrite(frame_target_dir+"/"+frame_name,frame)
-            if i>=300:
+            if i>=450:
                 break

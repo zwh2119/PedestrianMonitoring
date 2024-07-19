@@ -3,6 +3,8 @@ import cv2
 
 from age_classification import age_service
 from face_detection import detection_service
+# from retinaface import RetinaFace
+
 import base_config
 import time
 import random
@@ -29,6 +31,7 @@ if __name__ == '__main__':
     # 480*240/640*360/720*480/1280*720/1920*1080
     reso = [240,360, 480, 720, 1080]
     target_reso=[(480,240),(640,360),(720,480),(1280,720),(1920,1080)]
+
 
     # 统计图片人数
     for face_num in face:
@@ -58,7 +61,11 @@ if __name__ == '__main__':
                     frame,age_res=age_service(pic_resized,target_boxes)
                     time_end1=time.time()
 
-                    time_sum=time_end1-time_start1+time_end0-time_start0
-                    csv_writer.writerow([time_sum])
+                    time_sum0=time_end0-time_start0
+                    time_sum1=time_end1-time_start1
+                    time_sum=time_sum0+time_sum1
+
+                    csv_writer.writerow([time_sum0,time_sum1,time_sum])
+
 
 
